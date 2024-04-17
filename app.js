@@ -1,7 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const wordroutes = require('./routes/words.routes');
-const userRoutes = require('./routes/user.routes')
+const userRoutes = require('./routes/user.routes');
+const gameRoutes = require('./routes/game.routes');
 const userController = require('./controllers/user.controller');
 
 
@@ -13,8 +14,13 @@ mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connected to MongoDB database'))
   .catch(err => console.error('MongoDB connection error:', err));
 
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true })); 
+  
+
 app.use('/', wordroutes); 
-app.use('/users', userRoutes); 
+app.use('/users', userRoutes);
+app.use('/game',gameRoutes);
 
 
 app.listen(port, () => {

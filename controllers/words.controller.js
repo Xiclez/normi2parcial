@@ -1,17 +1,22 @@
+// words.controller.js
 const fs = require('fs');
 
-const getRandomWord = (req, res) => {
-  fs.readFile('utils/words.json', 'utf8', (err, data) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send('Error reading word list');
-    } else {
-      const words = JSON.parse(data);
-      const randomIndex = Math.floor(Math.random() * words.length);
-      const randomWord = words[randomIndex];
-      res.json({ word: randomWord });
-    }
-  });
+let wordList = null;
+
+const loadWordList = () => { 
+  try {
+    const wordsData = fs.readFileSync('utils/words.json');
+    wordList = JSON.parse(wordsData); 
+  } catch (err) {
+     console.error('Error loading word list:', err);
+  }
 };
 
-module.exports = { getRandomWord };
+const getRandomWord = () => { 
+  if (!wordList) { return null; } // Handle the case before wordList is loaded
+
+  const randomIndex = Math.floor(Math.random() * wordList.length);
+  return { word: wordList[randomIndex] };
+};
+
+module.exports = { getRandomWord, loadWordList }; // Export both functions
