@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const wordroutes = require('./routes/words.routes');
 const userRoutes = require('./routes/user.routes');
 const gameRoutes = require('./routes/game.routes');
-const userController = require('./controllers/user.controller');
 
 
 const app = express();
