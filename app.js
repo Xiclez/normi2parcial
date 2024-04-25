@@ -21,7 +21,8 @@ app.use('/', wordroutes);
 app.use('/users', userRoutes);
 app.use('/game',gameRoutes);
 
-
 app.listen(port, () => {
   console.log(`Random word API listening on port ${port}`);
 });
+
+module.exports = app; 

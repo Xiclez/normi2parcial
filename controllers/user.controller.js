@@ -7,7 +7,11 @@ const registerUser = async (req, res) => {
   if (!name) {
     return res.status(400).send('Missing name');
   }
-
+  const nameRegex = /^[a-zA-Z0-9]+$/;
+  if (!nameRegex.test(name)) {
+    return res.status(400).send('Name should contain only letters and numbers');
+  }
+  
   try {
     // Check if user already exists
     const existingUser = await User.findOne({ name });
